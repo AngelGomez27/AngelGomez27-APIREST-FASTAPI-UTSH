@@ -180,7 +180,7 @@ def crear_doctor(datos: Crear_Doctor, session: Session = Depends(get_session)):
 #Actualizar Doctor por ID
 @app.put("/doctores/{id}", response_model=Doctor, tags=["Doctores"])
 def actualizar_doctor(id: int, datos: Crear_Doctor, session: Session = Depends(get_session)):
-    doctor = session.get(Medicamento, id)
+    doctor = session.get(Doctor, id)
     if doctor is None:
         raise HTTPException(status_code=404, detail="Doctor no encontrado")
     datos_actualizados = datos.model_dump()
