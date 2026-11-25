@@ -97,18 +97,25 @@ def crear_medicamento(datos: Crear_Medicamento, session: Session = Depends(get_s
 
 #PUT Medicamento
 #Actualizar Medicamento por Id
-@app.put("/medicamentos/{id}", response_model=Medicamento, tags=["Medicamentos"])
+
+# PUT / PATCH Medicamento
+# Actualizar Medicamento por ID
+@app.patch("/medicamentos/{id}", response_model=Medicamento, tags=["Medicamentos"])
 def actualizar_medicamento(id: int, datos: Actualizar_Medicamento_id, session: Session = Depends(get_session)):
     medicamento = session.get(Medicamento, id)
+
     if medicamento is None:
         raise HTTPException(status_code=404, detail="Medicamento no encontrado")
-    datos_actualizados = datos.model_dump()
+
+    datos_actualizados = datos.model_dump(exclude_unset=True)
+
     for campo, valor in datos_actualizados.items():
         setattr(medicamento, campo, valor)
-    session.add(medicamento)
+
     session.commit()
     session.refresh(medicamento)
     return medicamento
+
 
 #DELETE
 #Eliminar Medicamento por Id
