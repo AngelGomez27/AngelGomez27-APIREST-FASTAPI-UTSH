@@ -100,7 +100,7 @@ def crear_medicamento(datos: Crear_Medicamento, session: Session = Depends(get_s
 
 # PUT / PATCH Medicamento
 # Actualizar Medicamento por ID
-@app.patch("/medicamentos/{id}", response_model=Medicamento, tags=["Medicamentos"])
+@app.put("/medicamentos/{id}", response_model=Medicamento, tags=["Medicamentos"])
 def actualizar_medicamento(id: int, datos: Actualizar_Medicamento_id, session: Session = Depends(get_session)):
     medicamento = session.get(Medicamento, id)
 
