@@ -75,7 +75,7 @@ class Crear_Medicamento(SQLModel):
     Precio_unitario: Decimal = Field(max_digits=10, decimal_places=2)
     Via_administracion: str = Field(max_length=30)
 
-class Actualizar_Medicamento(SQLModel):
+class Actualizar_Medicamento_id(SQLModel):
     Nombre: str | None = Field(default=None, max_length=100)
     Principio_Activo: str | None = Field(default=None, max_length=150)
     Concentracion: str | None = Field(default=None, max_length=50)
