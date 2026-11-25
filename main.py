@@ -75,6 +75,17 @@ class Crear_Medicamento(SQLModel):
     Precio_unitario: Decimal = Field(max_digits=10, decimal_places=2)
     Via_administracion: str = Field(max_length=30)
 
+class Actualizar_Medicamento(SQLModel):
+    Nombre: str | None = Field(default=None, max_length=100)
+    Principio_Activo: str | None = Field(default=None, max_length=150)
+    Concentracion: str | None = Field(default=None, max_length=50)
+    Forma_Farmaceutica: str | None = Field(default=None, max_length=50)
+    Lote: str | None = Field(default=None, max_length=30)
+    Fecha_Registro: datetime | None = Field(default=None)
+    Fecha_caducidad: date | None = Field(default=None)
+    Precio_unitario: Decimal | None = Field(default=None, max_digits=10, decimal_places=2)
+    Via_administracion: str | None = Field(default=None, max_length=30)
+
 # Registrar un medicamento
 @app.post("/medicamentos", response_model=Medicamento, status_code=201, tags=["Medicamentos"])
 def crear_medicamento(datos: Crear_Medicamento, session: Session = Depends(get_session)):
@@ -87,7 +98,7 @@ def crear_medicamento(datos: Crear_Medicamento, session: Session = Depends(get_s
 #PUT Medicamento
 #Actualizar Medicamento por Id
 @app.put("/medicamentos/{id}", response_model=Medicamento, tags=["Medicamentos"])
-def actualizar_medicamento(id: int, datos: Crear_Medicamento, session: Session = Depends(get_session)):
+def actualizar_medicamento(id: int, datos: Actualizar_Medicamento, session: Session = Depends(get_session)):
     medicamento = session.get(Medicamento, id)
     if medicamento is None:
         raise HTTPException(status_code=404, detail="Medicamento no encontrado")
